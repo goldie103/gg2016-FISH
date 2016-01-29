@@ -23,6 +23,7 @@ public class PlayerTest : MonoBehaviour {
 		Debug.Log (transform.eulerAngles.z);
 		if ((angle < 90 && angle >= 0) || (angle > 270 && angle <= 360)) {
 			x = 0.5f;
+			// thinggyyyyy
 		} else if (angle == 90 || angle == 270) {
 			x = 0;
 		} else {

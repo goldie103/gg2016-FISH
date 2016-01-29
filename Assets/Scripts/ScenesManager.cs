@@ -73,7 +73,7 @@ public class ScenesManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         mFloatingEffect = Random.value * cMaxFloatingOffset;
-        ChangeScene(GameScenes.LOGO);
+        ChangeScene(GameScenes.GAME);
 	}
 	
 	// Update is called once per frame
@@ -84,5 +84,16 @@ public class ScenesManager : MonoBehaviour {
     public void GoToMainMenu()
     {
         ChangeScene(GameScenes.MAIN_MENU);
+    }
+
+    public void GoToGame()
+    {
+        Debug.Log("Go to game");
+        ChangeScene(GameScenes.GAME);
+    }
+
+    public bool PlayingGame()
+    {
+        return mCurrentGameScene.Equals(GameScenes.GAME);
     }
 }

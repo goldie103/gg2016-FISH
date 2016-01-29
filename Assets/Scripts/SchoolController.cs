@@ -19,6 +19,8 @@ public class SchoolController : MonoBehaviour {
 
     public Transform Player;
 
+    public ScenesManager scenesManager;
+
     /// <summary>
     /// The code assumes the fish prefab will be positioned at the beginning of the school
     /// </summary>
@@ -61,26 +63,33 @@ public class SchoolController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        CheckLeaderDistance();
-
-        mTimeEllapsed += Time.deltaTime;
-        for (int i = 0; i < NumberOfFishes; ++i)
+        if (scenesManager.PlayingGame())
         {
-            if (mTimeEllapsed > i * LagToFollow && !mAlreadyFollowedCommand[i])
-            {
-                FollowCommand(School[i]);
-                mAlreadyFollowedCommand[i] = true;
-            }
-        }
 
-        if (mTimeEllapsed > (NumberOfFishes - 1) * LagToFollow)
-        {
-            if(mCurrentCommandIndex < NumberOfFishes - 1)
-            ++mCurrentCommandIndex;
-            mTimeEllapsed = 0;
+            CheckLeaderDistance();
+
+            mTimeEllapsed += Time.deltaTime;
             for (int i = 0; i < NumberOfFishes; ++i)
             {
-                mAlreadyFollowedCommand[i] = false;
+                if (mTimeEllapsed > i * LagToFollow && !mAlreadyFollowedCommand[i])
+                {
+                    Debug.Log(i);
+                    FollowCommand(School[i]);
+                    mAlreadyFollowedCommand[i] = true;
+                }
+            }
+
+            if (mTimeEllapsed > (NumberOfFishes - 1) * LagToFollow)
+            {
+                if (mCurrentCommandIndex < NumberOfFishes - 1)
+                {
+                    ++mCurrentCommandIndex;
+                    mTimeEllapsed = 0;
+                    for (int i = 0; i < NumberOfFishes; ++i)
+                    {
+                        mAlreadyFollowedCommand[i] = false;
+                    }
+                }
             }
         }
 	}

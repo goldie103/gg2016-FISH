@@ -7,6 +7,8 @@ public class SplashManager : MonoBehaviour {
 
     public float FadeSpeed = 1.5f;
 
+    public ScenesManager scenesManager;
+
     private SplashStates mCurrentState;
 
     public enum SplashStates
@@ -54,7 +56,7 @@ public class SplashManager : MonoBehaviour {
                 }
                 else
                 {
-                    ScenesManager.Instance.GoToMainMenu();
+                    scenesManager.GoToMainMenu();
                 }
                 break;
         }

@@ -43,35 +43,38 @@ public class FishEvent : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D pCollider)
     {
-        if (audioSource != null)
+        if (pCollider.tag == "SchoolLeader")
         {
-            audioSource.Play();
-        }
-        Debug.Log("Event triggered! " + SchoolAction);
-        switch (SchoolAction)
-        {
-            case SchoolEvent.STOP:
-                mSchoolController.Stop();
-                break;
-            case SchoolEvent.SLOWDOWN:
-            case SchoolEvent.SPEEDUP:
-                mSchoolController.ChangeSpeed(SpeedDelta);
-                break;
-            case SchoolEvent.UP:
-                mSchoolController.MoveDirection(90);
-                break;
-            case SchoolEvent.DOWN:
-                mSchoolController.MoveDirection(-90);
-                break;
-            case SchoolEvent.LOOP:
-                mSchoolController.Loop360();
-                break;
-            case SchoolEvent.DIAGONAL_UP:
-                mSchoolController.MoveDirection(45);
-                break;
-            case SchoolEvent.DIAGONAL_DOWN:
-                mSchoolController.MoveDirection(-45);
-                break;
+            if (audioSource != null)
+            {
+                audioSource.Play();
+            }
+            Debug.Log("Event triggered! " + pCollider.name + SchoolAction);
+            switch (SchoolAction)
+            {
+                case SchoolEvent.STOP:
+                    mSchoolController.Stop();
+                    break;
+                case SchoolEvent.SLOWDOWN:
+                case SchoolEvent.SPEEDUP:
+                    mSchoolController.ChangeSpeed(SpeedDelta);
+                    break;
+                case SchoolEvent.UP:
+                    mSchoolController.MoveDirection(90);
+                    break;
+                case SchoolEvent.DOWN:
+                    mSchoolController.MoveDirection(-90);
+                    break;
+                case SchoolEvent.LOOP:
+                    mSchoolController.Loop360();
+                    break;
+                case SchoolEvent.DIAGONAL_UP:
+                    mSchoolController.MoveDirection(45);
+                    break;
+                case SchoolEvent.DIAGONAL_DOWN:
+                    mSchoolController.MoveDirection(-45);
+                    break;
+            }
         }
     }
 

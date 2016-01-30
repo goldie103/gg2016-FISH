@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
+    public float WindConditionPoints = 800;
 
     public float ProPoints = 10;
     public float DecentPoints = 5;
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour {
 
     private SchoolController mSchoolController;
 
+    private ScenesManager mScenesManager;
+
     void Awake()
     {
         if (sInstance == null)
@@ -49,12 +52,16 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	    mSchoolController = GameObject.Find("SchoolController").GetComponent<SchoolController>();
-	}
+        mScenesManager = GameObject.Find("ScenesManager").GetComponent<ScenesManager>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
         CheckLeaderDistance();
-        Debug.Log(mGamePoints);
+        if (mGamePoints > WindConditionPoints)
+        {
+            mScenesManager.GoToEnd();
+        }
 	}
 
     public void Initialize()

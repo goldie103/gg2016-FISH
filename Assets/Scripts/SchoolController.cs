@@ -5,9 +5,7 @@ using System.Collections.Generic;
 public class SchoolController : MonoBehaviour {
 
     public Transform SchoolLeader;
-
     
-
     public int NumberOfFishes = 4;
 
     public float XFishOffset = 2;
@@ -37,6 +35,9 @@ public class SchoolController : MonoBehaviour {
 
     public List<float> Commands;
     private int mCurrentCommandIndex;
+
+    private List<float> mCommandsStack;
+    private bool mShouldChangeCommandsList;
 
 
 	// Use this for initialization
@@ -104,9 +105,7 @@ public class SchoolController : MonoBehaviour {
     {
         if (mCurrentCommandIndex < Commands.Count)
         {
-         
             pFish.DoRotation(Commands[mCurrentCommandIndex]);
-            
         }
     }
 
@@ -128,6 +127,20 @@ public class SchoolController : MonoBehaviour {
             {
                 ++mCurrentCommandIndex;
                 mTimeEllapsed = 0;
+                for (int i = 0; i < NumberOfFishes; ++i)
+                {
+                    mAlreadyFollowedCommand[i] = false;
+                }
+
+            }
+            else
+            {
+                if (mShouldChangeCommandsList)
+                {
+                    Commands = mCommandsStack;
+                }
+                mTimeEllapsed = 0;
+                mCurrentCommandIndex = 0;
                 for (int i = 0; i < NumberOfFishes; ++i)
                 {
                     mAlreadyFollowedCommand[i] = false;
@@ -155,12 +168,15 @@ public class SchoolController : MonoBehaviour {
     public void MoveDirection(float pRotation)
     {
         mCurrentCommandIndex = 0;
-        Commands = new List<float>();
-        Commands.Add(pRotation);
-        for (int i = 0; i < NumberOfFishes; ++i)
-        {
-            mAlreadyFollowedCommand[i] = false;
-        }
+        mCommandsStack = new List<float>();
+        mCommandsStack.Add(pRotation);
+
+        mShouldChangeCommandsList = true;
+
+        //for (int i = 0; i < NumberOfFishes; ++i)
+        //{
+        //    mAlreadyFollowedCommand[i] = false;
+        //}
     }
 
     public void Loop360()

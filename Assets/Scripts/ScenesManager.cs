@@ -49,7 +49,7 @@ public class ScenesManager : MonoBehaviour {
             case GameScenes.CREDITS:
                 break;
             case GameScenes.GAME:
-
+                GameObject.Find("GameManager").GetComponent<GameManager>().Initialize();
                 break;
 
         }
@@ -88,8 +88,12 @@ public class ScenesManager : MonoBehaviour {
 
     public void GoToGame()
     {
-        Debug.Log("Go to game");
         ChangeScene(GameScenes.GAME);
+    }
+
+    public void GoToEnd()
+    {
+        ChangeScene(GameScenes.END);
     }
 
     public bool PlayingGame()

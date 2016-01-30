@@ -18,7 +18,7 @@ public class SplashManager : MonoBehaviour {
         FINISH
     }
 
-    private const float cLogoAppearanceTime = 2f;
+    private const float cLogoAppearanceTime = 0.5f;
 
     private float mTimer = 0;
 

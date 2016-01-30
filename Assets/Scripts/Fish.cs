@@ -59,5 +59,11 @@ public class Fish : MonoBehaviour {
         
     }
 
-
+    void OnCollisionEnter2D(Collision2D pCollision)
+    {
+        if (pCollision.transform.tag == "Fish" || pCollision.transform.tag == "SchoolLeader")
+        {
+            Physics2D.IgnoreCollision(transform.GetComponent<Collider2D>(), pCollision.collider);
+        }
+    }
 }

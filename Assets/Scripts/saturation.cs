@@ -21,16 +21,21 @@ public class saturation : MonoBehaviour
         switch (score)
         {
             case 1:
-                _render.DOColor(HexToColor("656565FF"), 1);
+                _render.DOColor(HexToColor("656565FF"), 10);
+                
                 break;
             case 2:
-                _render.DOColor(HexToColor("818181FF"), 1);
+                _render.DOColor(HexToColor("818181FF"), 20);
+                //_render.DOColor(HexToColor("414141FF"), 20);
+
                 break;
             case 3:
-                _render.DOColor(HexToColor("CACACAFF"), 1);
+                _render.DOColor(HexToColor("CACACAFF"), 30);
+                //_render.DOColor(HexToColor("595959FF"), 30);
+
                 break;
             case 4:
-                _render.DOColor(HexToColor("FFFFFFFF"), 1);
+                _render.DOColor(HexToColor("FFFFFFFF"), 60);
                 break;
         }
        

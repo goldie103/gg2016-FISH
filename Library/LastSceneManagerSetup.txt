@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/hghsjsjs.unity
+- path: Assets/FISH.unity
   isLoaded: 1
   isActive: 1

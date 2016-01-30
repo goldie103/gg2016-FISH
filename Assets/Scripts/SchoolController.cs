@@ -138,13 +138,15 @@ public class SchoolController : MonoBehaviour {
                 if (mShouldChangeCommandsList)
                 {
                     Commands = mCommandsStack;
+                    mShouldChangeCommandsList = false;
+                    for (int i = 0; i < NumberOfFishes; ++i)
+                    {
+                        mAlreadyFollowedCommand[i] = false;
+                    }
                 }
                 mTimeEllapsed = 0;
                 mCurrentCommandIndex = 0;
-                for (int i = 0; i < NumberOfFishes; ++i)
-                {
-                    mAlreadyFollowedCommand[i] = false;
-                }
+                
             }
         }
     }
@@ -182,16 +184,17 @@ public class SchoolController : MonoBehaviour {
     public void Loop360()
     {
         mCurrentCommandIndex = 0;
-        Commands = new List<float>();
-        Commands.Add(0);
-        Commands.Add(45);
-        Commands.Add(90);
-        Commands.Add(135);
-        Commands.Add(180);
-        Commands.Add(225);
-        Commands.Add(270);
-        Commands.Add(315);
-        Commands.Add(359);
+        mCommandsStack = new List<float>();
+
+        mCommandsStack.Add(0);
+        mCommandsStack.Add(45);
+        mCommandsStack.Add(90);
+        mCommandsStack.Add(135);
+        mCommandsStack.Add(180);
+        mCommandsStack.Add(225);
+        mCommandsStack.Add(270);
+        mCommandsStack.Add(315);
+        mCommandsStack.Add(359);
 
         for (int i = 0; i < NumberOfFishes; ++i)
         {

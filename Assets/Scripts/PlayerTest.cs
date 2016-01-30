@@ -2,40 +2,46 @@ using UnityEngine;
 using System.Collections;
 using DG.Tweening;
 
-public class PlayerTest : MonoBehaviour {
-	private int speed = 3;
-	private float x, y;
-	private Rigidbody2D rigidBody;
-    void Start() {
+public class PlayerTest : MonoBehaviour
+{
+    public Animator Anim;
+    private Rigidbody2D rigidBody;
+    private int numbe = 0;
+    private int numbea = 0;
+    private float x, y;
+    public ParticleSystem particle;
+    public int particlePerSecond = 75;
+    // Use this for initialization
+    void Start()
+    {
         rigidBody = GetComponent<Rigidbody2D>();
+        //x = 2f;
+        StartCoroutine(updateAnim());
+
     }
 
-	public void FixedUpdate() {
-		rigidBody.velocity = new Vector2(x, y);
-        if (Input.GetKeyDown(KeyCode.RightArrow)) { DoRotation(); }
-		if (Input.GetKeyDown(KeyCode.LeftArrow)) { DoRotation(-1); }
-		if (Input.GetKeyDown(KeyCode.UpArrow)) { speed += 1; }
+    public IEnumerator updateAnim()
+    {
+        yield return new WaitForSeconds(2.0f);
+        Anim.speed = 3;
+
     }
 
-	public void DoRotation(int multiplier=1) {
-		float angle = transform.eulerAngles.z;
-		transform.DORotate(new Vector3 (0, 0, 45 * multiplier), 1, RotateMode.LocalAxisAdd);
-		Debug.Log (transform.eulerAngles.z);
-		if ((angle < 90 && angle >= 0) || (angle > 270 && angle <= 360)) {
-			x = 0.5f;
-			// thinggyyyyy
-		} else if (angle == 90 || angle == 270) {
-			x = 0;
-		} else {
-			x = -0.5f;
-		}
+    public void FixedUpdate()
+    {
+        if (true)
+        {
+            //rigidBody.velocity = new Vector2(x,y);
+        }
+        if (Input.GetAxis("Horizontal")>0)
+            transform.Rotate(Vector3.forward* Time.deltaTime * 98);
 
-		if (angle > 0 && angle < 180) {
-			y = 0.5f;
-		} else if (angle == 0 || angle == 180) {
-			y = 0;
-		} else {
-			y = -0.5f;
-		}
-   }
+        if (Input.GetAxis("Horizontal") < -0)
+            transform.Rotate(Vector3.forward * Time.deltaTime * -98);
+
+        transform.Translate(Vector3.right * Time.deltaTime * 10);
+
+        //rigidBody.velocity = new Vector2(hello,hello);
+
+    }
 }

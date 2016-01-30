@@ -6,9 +6,7 @@ public class SchoolController : MonoBehaviour {
 
     public Transform SchoolLeader;
 
-    public float DistanceToRed = 17;
-
-    public float DistanceToGreen = 14;
+    
 
     public int NumberOfFishes = 4;
 
@@ -80,8 +78,6 @@ public class SchoolController : MonoBehaviour {
         if (scenesManager.PlayingGame())
         {
 
-            CheckLeaderDistance();
-
 
 
             if (School[0].Speed != mPreviousSpeed)
@@ -103,24 +99,12 @@ public class SchoolController : MonoBehaviour {
         }
 	}
 
-    private void CheckLeaderDistance()
-    {
-        if (Vector3.Distance(Player.position, SchoolLeader.transform.position) > DistanceToRed)
-        {
-            SchoolLeader.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0);
-        }
-        else if (Vector3.Distance(Player.position, SchoolLeader.transform.position) < DistanceToGreen)
-        {
-            SchoolLeader.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0);
-        }
-    }
-
+    
     private void FollowCommand(Fish pFish)
     {
         if (mCurrentCommandIndex < Commands.Count)
         {
-            
-                //TODO all the possible commands!
+         
             pFish.DoRotation(Commands[mCurrentCommandIndex]);
             
         }

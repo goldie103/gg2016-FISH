@@ -8,14 +8,11 @@ public class GameManager : MonoBehaviour {
     public float DecentPoints = 5;
     public float BadPoints = 2;
 
-    public float DistanceToPro = 10.5f;
-
-    public float DistanceToDecent = 15;
-
-    public float DistanceToBad = 17;
+    public float DistanceOne = 20;
+    public float DistanceTwo = 50;
+    public float DistanceThree = 80;
 
     private float mPointsTimer;
-
     private float mGamePoints;
 
     /// <summary>
@@ -74,8 +71,7 @@ public class GameManager : MonoBehaviour {
     private void CheckLeaderDistance()
     {
         float distance = Vector3.Distance(Player.position, SchoolLeader.transform.position);
-        if (distance < DistanceToPro)
-        {
+        if (distance < DistanceOne) {
             mPointsTimer += Time.deltaTime;
             
             SchoolLeader.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0);
@@ -84,9 +80,10 @@ public class GameManager : MonoBehaviour {
                 mGamePoints += ProPoints;
             }
             mLastPointsTimer = Mathf.FloorToInt(mPointsTimer);
+            SaturationEventManager.OnSaturate(4);
 
         }
-        else if (distance < DistanceToDecent)
+        else if (distance < DistanceTwo)
         {
             mPointsTimer += Time.deltaTime;
             SchoolLeader.GetComponent<SpriteRenderer>().color = new Color(0, 0, 1);
@@ -95,8 +92,9 @@ public class GameManager : MonoBehaviour {
                 mGamePoints += DecentPoints;
             }
             mLastPointsTimer = Mathf.FloorToInt(mPointsTimer);
+            SaturationEventManager.OnSaturate(3);
         }
-        else if (distance < DistanceToBad)
+        else if (distance < DistanceThree)
         {
             mPointsTimer += Time.deltaTime;
             SchoolLeader.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0);
@@ -105,11 +103,13 @@ public class GameManager : MonoBehaviour {
                 mGamePoints += BadPoints;
             }
             mLastPointsTimer = Mathf.FloorToInt(mPointsTimer);
+            SaturationEventManager.OnSaturate(2);
         }
         else
         {
             mPointsTimer = 0;
             SchoolLeader.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f);
+            SaturationEventManager.OnSaturate(1);
         }
     }
 }

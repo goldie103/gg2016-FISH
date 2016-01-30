@@ -36,8 +36,6 @@ public class SchoolController : MonoBehaviour {
     public List<float> Commands;
     private int mCurrentCommandIndex;
 
-    private List<float> mCommandsStack;
-    private bool mShouldChangeCommandsList;
 
 
 	// Use this for initialization
@@ -105,7 +103,9 @@ public class SchoolController : MonoBehaviour {
     {
         if (mCurrentCommandIndex < Commands.Count)
         {
+         
             pFish.DoRotation(Commands[mCurrentCommandIndex]);
+            
         }
     }
 
@@ -131,22 +131,6 @@ public class SchoolController : MonoBehaviour {
                 {
                     mAlreadyFollowedCommand[i] = false;
                 }
-
-            }
-            else
-            {
-                if (mShouldChangeCommandsList)
-                {
-                    Commands = mCommandsStack;
-                    mShouldChangeCommandsList = false;
-                    for (int i = 0; i < NumberOfFishes; ++i)
-                    {
-                        mAlreadyFollowedCommand[i] = false;
-                    }
-                }
-                mTimeEllapsed = 0;
-                mCurrentCommandIndex = 0;
-                
             }
         }
     }
@@ -170,31 +154,27 @@ public class SchoolController : MonoBehaviour {
     public void MoveDirection(float pRotation)
     {
         mCurrentCommandIndex = 0;
-        mCommandsStack = new List<float>();
-        mCommandsStack.Add(pRotation);
-
-        mShouldChangeCommandsList = true;
-
-        //for (int i = 0; i < NumberOfFishes; ++i)
-        //{
-        //    mAlreadyFollowedCommand[i] = false;
-        //}
+        Commands = new List<float>();
+        Commands.Add(pRotation);
+        for (int i = 0; i < NumberOfFishes; ++i)
+        {
+            mAlreadyFollowedCommand[i] = false;
+        }
     }
 
     public void Loop360()
     {
         mCurrentCommandIndex = 0;
-        mCommandsStack = new List<float>();
-
-        mCommandsStack.Add(0);
-        mCommandsStack.Add(45);
-        mCommandsStack.Add(90);
-        mCommandsStack.Add(135);
-        mCommandsStack.Add(180);
-        mCommandsStack.Add(225);
-        mCommandsStack.Add(270);
-        mCommandsStack.Add(315);
-        mCommandsStack.Add(359);
+        Commands = new List<float>();
+        Commands.Add(0);
+        Commands.Add(45);
+        Commands.Add(90);
+        Commands.Add(135);
+        Commands.Add(180);
+        Commands.Add(225);
+        Commands.Add(270);
+        Commands.Add(315);
+        Commands.Add(359);
 
         for (int i = 0; i < NumberOfFishes; ++i)
         {

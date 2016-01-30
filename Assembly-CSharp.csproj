@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{48C4BE76-82B6-E826-3341-2A52D14389B4}</ProjectGuid>
+    <ProjectGuid>{A3AA5503-ABFE-704E-6F93-E67FAAEA6CC1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -45,8 +45,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Fish.cs" />
+     <Compile Include="Assets\Scripts\FishAnimaion.cs" />
+     <Compile Include="Assets\Scripts\FishEvent.cs" />
+     <Compile Include="Assets\Scripts\FloorBuilder.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\ObjectSpawner.cs" />
      <Compile Include="Assets\Scripts\PlayerTest.cs" />
+     <Compile Include="Assets\Scripts\SaturationEventManager.cs" />
+     <Compile Include="Assets\Scripts\ScenesManager.cs" />
+     <Compile Include="Assets\Scripts\SchoolController.cs" />
+     <Compile Include="Assets\Scripts\SplashManager.cs" />
+     <Compile Include="Assets\Scripts\Whale.cs" />
      <Compile Include="Assets\Scripts\input.cs" />
+     <Compile Include="Assets\Scripts\saturation.cs" />
      <None Include="Assets\DOTween\DOTween46.xml" />
      <None Include="Assets\DOTween\DOTween43.xml" />
      <None Include="Assets\DOTween\readme.txt" />
@@ -58,16 +71,16 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="DOTween">
- <HintPath>U:/dev/unity/GG2016/Assets/DOTween/DOTween.dll</HintPath>
+ <HintPath>U:/dev/unity/gg2016-FISH/Assets/DOTween/DOTween.dll</HintPath>
  </Reference>
  <Reference Include="DOTween43">
- <HintPath>U:/dev/unity/GG2016/Assets/DOTween/DOTween43.dll</HintPath>
+ <HintPath>U:/dev/unity/gg2016-FISH/Assets/DOTween/DOTween43.dll</HintPath>
  </Reference>
  <Reference Include="DOTween46">
- <HintPath>U:/dev/unity/GG2016/Assets/DOTween/DOTween46.dll</HintPath>
+ <HintPath>U:/dev/unity/gg2016-FISH/Assets/DOTween/DOTween46.dll</HintPath>
  </Reference>
  <Reference Include="DOTween50">
- <HintPath>U:/dev/unity/GG2016/Assets/DOTween/DOTween50.dll</HintPath>
+ <HintPath>U:/dev/unity/gg2016-FISH/Assets/DOTween/DOTween50.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

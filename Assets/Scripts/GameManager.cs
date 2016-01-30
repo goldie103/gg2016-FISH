@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
     private const int mNumberOfPointsPerformance = 51;
 
     public float WindConditionPoints = 800;
@@ -22,7 +23,7 @@ public class GameManager : MonoBehaviour {
 
     private List<float> mPlayerPerformance;
 
-    public AudioClip soundBG, sound1,sound2,sound3;
+    public AudioClip soundBG, sound1, sound2, sound3;
     public AudioSource audioSource;
 
     /// <summary>
@@ -58,21 +59,23 @@ public class GameManager : MonoBehaviour {
     }
 
 
-	// Use this for initialization
-	void Start () {
-	    mSchoolController = GameObject.Find("SchoolController").GetComponent<SchoolController>();
+    // Use this for initialization
+    void Start()
+    {
+        mSchoolController = GameObject.Find("SchoolController").GetComponent<SchoolController>();
         mScenesManager = GameObject.Find("ScenesManager").GetComponent<ScenesManager>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         //Debug.Log(mGamePoints);
         CheckLeaderDistance();
         if (mGamePoints > WindConditionPoints)
         {
             mScenesManager.GoToEnd();
         }
-	}
+    }
 
     public void Initialize()
     {
@@ -86,9 +89,10 @@ public class GameManager : MonoBehaviour {
     private void CheckLeaderDistance()
     {
         float distance = Vector3.Distance(Player.position, SchoolLeader.transform.position);
-        if (distance < DistanceOne) {
+        if (distance < DistanceOne)
+        {
             mPointsTimer += Time.deltaTime;
-            
+
             SchoolLeader.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0);
             if (mPointsTimer - mLastPointsTimer >= 1)
             {
@@ -99,7 +103,7 @@ public class GameManager : MonoBehaviour {
             }
             mLastPointsTimer = Mathf.FloorToInt(mPointsTimer);
             SaturationEventManager.OnSaturate(4);
-           
+
 
         }
         else if (distance < DistanceTwo)
@@ -144,7 +148,7 @@ public class GameManager : MonoBehaviour {
                 CalculatePerformance(0);
             }
             mLastPointsTimer = Mathf.FloorToInt(mPointsTimer);
-            
+
             SchoolLeader.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f);
             SaturationEventManager.OnSaturate(1);
         }
@@ -157,7 +161,7 @@ public class GameManager : MonoBehaviour {
     public void PauseResumeGame()
     {
 
-       // mScenesManager.GoToPause();
+        // mScenesManager.GoToPause();
     }
 
     private void CalculatePerformance(float pPoints)
@@ -169,10 +173,10 @@ public class GameManager : MonoBehaviour {
             for (int i = 0; i < mPlayerPerformance.Count; ++i)
             {
                 totalPoints += mPlayerPerformance[i];
-                
+
             }
         }
-        
+
         if (totalPoints > 0)
         {
             //if (totalPoints < 20)
@@ -199,10 +203,10 @@ public class GameManager : MonoBehaviour {
             //    audioSource.clip = sound3;
             //    audioSource.Play();
             //}
-            
+
             audioSource.clip = sound3;
-            audioSource.Play(); 
-            
+            audioSource.Play();
+
             mPlayerPerformance = new List<float>();
         }
     }

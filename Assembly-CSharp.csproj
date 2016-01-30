@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\ObjectSpawner.cs" />
      <Compile Include="Assets\Scripts\PlayerTest.cs" />
      <Compile Include="Assets\Scripts\SaturationEventManager.cs" />
+     <Compile Include="Assets\Scripts\SceneFade.cs" />
      <Compile Include="Assets\Scripts\ScenesManager.cs" />
      <Compile Include="Assets\Scripts\SchoolController.cs" />
      <Compile Include="Assets\Scripts\SplashManager.cs" />

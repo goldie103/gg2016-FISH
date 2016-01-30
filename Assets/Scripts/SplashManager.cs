@@ -1,94 +1,49 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using DG.Tweening;
 
 public class SplashManager : MonoBehaviour {
+    public SpriteRenderer spriteBody;
+    public SpriteRenderer spriteTail;
+    public GameObject[] schoolFish;
+    public Transform parentSchool;
 
-    public SpriteRenderer SplashImage;
+    public Text textSpace;
+    public float initialPause = 2.5f;
+    public float textInterval = 5f;
+    private Vector3 movement = Vector3.right;
+    private Vector3 schoolMovement = Vector3.zero;
+    private Rigidbody2D rigidBody;
+    public string[] StoryText;
 
-    public float FadeSpeed = 1.5f;
-
-    public ScenesManager scenesManager;
-
-    private SplashStates mCurrentState;
-
-    public enum SplashStates
-    {
-        START,
-        SHOW,
-        FINISH
+    void Start() {
+        rigidBody = GetComponent<Rigidbody2D>();
+        StartCoroutine(DoIntro());
     }
 
-    private const float cLogoAppearanceTime = 0.5f;
-
-    private float mTimer = 0;
-
-	// Use this for initialization
-	void Start () {
-        ChangeState(SplashStates.START);
-        
+    private IEnumerator DoIntro() {
+        yield return new WaitForSeconds(initialPause);
+        for (int i = 0; i < StoryText.Length; i++) {
+            textSpace.text = StoryText[i];
+            if (i == 4) {
+                schoolMovement = Vector3.right * 6;
+            } else if (i == 6) {
+                parentSchool.position = new Vector3(-4.7f, transform.position.y);
+                schoolMovement = Vector3.zero;
+            }
+            var tween = textSpace.DOFade(1, 2);
+            yield return tween.WaitForCompletion();
+            yield return new WaitForSeconds(textInterval);
+            var tween2 = textSpace.DOFade(0, 2);
+            yield return tween2.WaitForCompletion();
+        }
     }
 
-    // Update is called once per frame
     void Update() {
-        switch (mCurrentState)
-        {
-            case SplashStates.START:
-                if (SplashImage.material.color.a <= 0.95f)
-                {
-                    FadeIn();
-                }
-                else
-                {
-                    ChangeState(SplashStates.SHOW);
-                }
-            break;
-            case SplashStates.SHOW:
-                mTimer += Time.deltaTime;
-                if (mTimer > cLogoAppearanceTime)
-                {
-                    ChangeState(SplashStates.FINISH);
-                }
-                break;
-            case SplashStates.FINISH:
-                if (SplashImage.material.color.a >= 0.05f)
-                {
-                    FadeOut();
-                }
-                else
-                {
-                    scenesManager.GoToMainMenu();
-                }
-                break;
+        rigidBody.velocity = movement;
+        foreach (GameObject fish in schoolFish) {
+            fish.GetComponent<Rigidbody2D>().velocity = schoolMovement;
         }
-    }
-
-    void ChangeState(SplashStates pNewState)
-    {
-        switch (pNewState)
-        {
-            case SplashStates.START:
-                SplashImage.material.color = Color.clear;
-                break;
-            case SplashStates.SHOW:
-                mTimer = 0;
-                SplashImage.material.color = Color.white;
-                break;
-            case SplashStates.FINISH:
-                break;
-        }
-        mCurrentState = pNewState;
-    }
-    
-    void FadeOut()
-    {
-        // Lerp the colour of the texture between itself and transparent.
-        SplashImage.material.color = Color.Lerp(SplashImage.material.color, Color.clear, FadeSpeed * Time.deltaTime);
-    }
-
-
-    void FadeIn()
-    {
-        // Lerp the colour of the texture between itself and black.
-        SplashImage.material.color = Color.Lerp(SplashImage.material.color, Color.white, FadeSpeed * Time.deltaTime);
     }
 }

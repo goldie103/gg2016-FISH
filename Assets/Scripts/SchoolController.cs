@@ -40,21 +40,17 @@ public class SchoolController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        
         InitializeSchool();
-        
     }
 
-    public void InitializeSchool()
-    {
+    public void InitializeSchool() {
         FishPrefab.SetActive(true);
         mTimeEllapsed = 0;
         mCurrentCommandIndex = 0;
         //mCommands = new List<float>();
         mAlreadyFollowedCommand = new List<bool>();
         School = new List<Fish>();
-        for (int i = 0; i < NumberOfFishes; ++i)
-        {
+        for (int i = 0; i < NumberOfFishes; ++i) {
             mAlreadyFollowedCommand.Add(false);
             GameObject newFish = GameObject.Instantiate(FishPrefab);
             newFish.transform.position = new Vector3(FishPrefab.transform.position.x - i * XFishOffset * Random.value, Random.value > 0.5f? FishPrefab.transform.position.y + Random.value * YFishOffset: FishPrefab.transform.position.y - Random.value * YFishOffset, 0);
@@ -62,23 +58,15 @@ public class SchoolController : MonoBehaviour {
         }
 
         SchoolLeader.transform.SetParent(School[NumberOfFishes / 2].transform);
-
         SchoolLeader.transform.localPosition = Vector3.zero;
-
         mPreviousSpeed = School[0].Speed;
-
         FishPrefab.SetActive(false);
 
     }
 
-	// Update is called once per frame
-	void Update ()
-    {
+	void Update () {
         if (scenesManager.PlayingGame())
         {
-
-
-
             if (School[0].Speed != mPreviousSpeed)
             {
                 mTimeEllapsed += Time.deltaTime;

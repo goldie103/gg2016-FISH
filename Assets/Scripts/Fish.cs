@@ -2,12 +2,15 @@
 using System.Collections;
 using DG.Tweening;
 
-
+/// <summary>
+/// School fish
+/// </summary>
 public class Fish : MonoBehaviour {
 
-
-    private int speed = 3;
+    
     private float x, y;
+
+    public float Speed = 2f;
 
     public float VelocityX
     {
@@ -21,48 +24,40 @@ public class Fish : MonoBehaviour {
         private set { }
     }
 
+    private ScenesManager mScenesManager;
+
     private Rigidbody2D rigidBody;
     void Start()
     {
+        mScenesManager = GameObject.Find("ScenesManager").GetComponent<ScenesManager>();
         rigidBody = GetComponent<Rigidbody2D>();
+        //StartCoroutine(MoveLeft());
     }
+    //private IEnumerator MoveLeft()
+    //{
+    //    yield return new WaitForSeconds(2.5f);
+    //    RotateL(true);
+    //    yield return new WaitForSeconds(2.5f);
+    //    RotateL(false);
 
-    
+    //}
 
-    public void DoRotation(int multiplier = 1)
+    void Update()
     {
-        float angle = transform.eulerAngles.z;
-        transform.DORotate(new Vector3(0, 0, 45 * multiplier), 1, RotateMode.LocalAxisAdd);
-        Debug.Log(transform.eulerAngles.z);
-        if ((angle < 90 && angle >= 0) || (angle > 270 && angle <= 360))
+        if (mScenesManager.PlayingGame())
         {
-            x = 0.5f;
-        }
-        else if (angle == 90 || angle == 270)
-        {
-            x = 0;
-        }
-        else
-        {
-            x = -0.5f;
-        }
-
-        if (angle > 0 && angle < 180)
-        {
-            y = 0.5f;
-        }
-        else if (angle == 0 || angle == 180)
-        {
-            y = 0;
-        }
-        else
-        {
-            y = -0.5f;
+            transform.Translate(Vector3.right * Time.deltaTime * Speed);
         }
     }
 
-    public void IncreaseSpeed()
+
+    public void DoRotation(float pRotation)
     {
-        speed += 1;
+
+        transform.DORotate(Vector3.forward * pRotation, 2);
+        
+        
     }
+
+
 }

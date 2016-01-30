@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
 
+    private SchoolController mSchoolController;
+
     void Awake()
     {
         if (sInstance == null)
@@ -23,11 +25,16 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+	    mSchoolController = GameObject.Find("SchoolController").GetComponent<SchoolController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+
+    public void Initialize()
+    {
+
+    }
 }

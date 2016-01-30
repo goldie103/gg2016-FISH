@@ -73,7 +73,7 @@ public class ScenesManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         mFloatingEffect = Random.value * cMaxFloatingOffset;
-        ChangeScene(GameScenes.GAME);
+        ChangeScene(GameScenes.LOGO);
 	}
 	
 	// Update is called once per frame

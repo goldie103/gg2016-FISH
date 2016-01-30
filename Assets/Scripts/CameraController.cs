@@ -8,6 +8,8 @@ public class CameraController : MonoBehaviour {
 
     public float DistanceToZoomOut = 13f;
 
+    public float DistanceToRestart = 20f;
+
     public Transform Fish;
 
     public Transform School;
@@ -22,7 +24,7 @@ public class CameraController : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate () {
         transform.position = Fish.position + new Vector3(0, 0, -10);
-        Debug.Log(Vector3.Distance(transform.position, School.position));
+        //Debug.Log(Vector3.Distance(transform.position, School.position));
         if (Vector3.Distance(transform.position, School.position) > DistanceToZoomOut)
         {
             mCamera.DOOrthoSize(8, 1);

@@ -15,11 +15,15 @@ public class SchoolController : MonoBehaviour {
     public float XFishOffset = 2;
     public float YFishOffset = 2;
 
-    private float LagToFollow = 0.5f;
+    public float LagToFollow = 0.1f;
 
     public Transform Player;
 
     public ScenesManager scenesManager;
+
+    private float mPreviousSpeed;
+
+    public float StopTime = 3f;
 
     /// <summary>
     /// The code assumes the fish prefab will be positioned at the beginning of the school
@@ -46,6 +50,7 @@ public class SchoolController : MonoBehaviour {
 
     public void InitializeSchool()
     {
+        FishPrefab.SetActive(true);
         mTimeEllapsed = 0;
         mCurrentCommandIndex = 0;
         //mCommands = new List<float>();
@@ -58,6 +63,15 @@ public class SchoolController : MonoBehaviour {
             newFish.transform.position = new Vector3(FishPrefab.transform.position.x - i * XFishOffset * Random.value, Random.value > 0.5f? FishPrefab.transform.position.y + Random.value * YFishOffset: FishPrefab.transform.position.y - Random.value * YFishOffset, 0);
             School.Add(newFish.GetComponent<Fish>());
         }
+
+        SchoolLeader.transform.SetParent(School[NumberOfFishes / 2].transform);
+
+        SchoolLeader.transform.localPosition = Vector3.zero;
+
+        mPreviousSpeed = School[0].Speed;
+
+        FishPrefab.SetActive(false);
+
     }
 
 	// Update is called once per frame
@@ -68,28 +82,23 @@ public class SchoolController : MonoBehaviour {
 
             CheckLeaderDistance();
 
-            mTimeEllapsed += Time.deltaTime;
-            for (int i = 0; i < NumberOfFishes; ++i)
+
+
+            if (School[0].Speed != mPreviousSpeed)
             {
-                if (mTimeEllapsed > i * LagToFollow && !mAlreadyFollowedCommand[i])
+                mTimeEllapsed += Time.deltaTime;
+                if (mTimeEllapsed > StopTime)
                 {
-                    Debug.Log(i);
-                    FollowCommand(School[i]);
-                    mAlreadyFollowedCommand[i] = true;
+                    for (int i = 0; i < School.Count; ++i)
+                    {
+                        School[i].Speed = mPreviousSpeed;
+                    }
+                    mTimeEllapsed = 0;
                 }
             }
-
-            if (mTimeEllapsed > (NumberOfFishes - 1) * LagToFollow)
+            else
             {
-                if (mCurrentCommandIndex < NumberOfFishes - 1)
-                {
-                    ++mCurrentCommandIndex;
-                    mTimeEllapsed = 0;
-                    for (int i = 0; i < NumberOfFishes; ++i)
-                    {
-                        mAlreadyFollowedCommand[i] = false;
-                    }
-                }
+                SchoolCommands();
             }
         }
 	}
@@ -108,39 +117,87 @@ public class SchoolController : MonoBehaviour {
 
     private void FollowCommand(Fish pFish)
     {
-        if (Commands[mCurrentCommandIndex] > 0 && Commands[mCurrentCommandIndex] <= 45)
+        if (mCurrentCommandIndex < Commands.Count)
         {
-            //TODO all the possible commands!
-            pFish.DoRotation(1);
+            
+                //TODO all the possible commands!
+            pFish.DoRotation(Commands[mCurrentCommandIndex]);
+            
         }
-        else if (Commands[mCurrentCommandIndex] > 45 && Commands[mCurrentCommandIndex] <= 90)
+    }
+
+    private void SchoolCommands()
+    {
+        mTimeEllapsed += Time.deltaTime;
+        for (int i = 0; i < School.Count; ++i)
         {
-            pFish.DoRotation(2);
-        }
-        else if (Commands[mCurrentCommandIndex] > 90 && Commands[mCurrentCommandIndex] <= 135)
-        {
-            pFish.DoRotation(3);
-        }
-        else if (Commands[mCurrentCommandIndex] > 135 && Commands[mCurrentCommandIndex] <= 180)
-        {
-            pFish.DoRotation(4);
-        }
-        else if (Commands[mCurrentCommandIndex] > 180 && Commands[mCurrentCommandIndex] <= 225)
-        {
-            pFish.DoRotation(5);
-        }
-        else if (Commands[mCurrentCommandIndex] > 225& Commands[mCurrentCommandIndex] <= 270)
-        {
-            pFish.DoRotation(6);
-        }
-        else if (Commands[mCurrentCommandIndex] > 270 && Commands[mCurrentCommandIndex] <= 315)
-        {
-            pFish.DoRotation(7);
-        }
-        else if (Commands[mCurrentCommandIndex] > 315 && Commands[mCurrentCommandIndex] <= 360)
-        {
-            pFish.DoRotation(8);
+            if (mTimeEllapsed > i * LagToFollow && !mAlreadyFollowedCommand[i])
+            {
+                FollowCommand(School[i]);
+                mAlreadyFollowedCommand[i] = true;
+            }
         }
 
+        if (mTimeEllapsed > (School.Count - 1) * LagToFollow)
+        {
+            if (mCurrentCommandIndex < School.Count - 1)
+            {
+                ++mCurrentCommandIndex;
+                mTimeEllapsed = 0;
+                for (int i = 0; i < NumberOfFishes; ++i)
+                {
+                    mAlreadyFollowedCommand[i] = false;
+                }
+            }
+        }
     }
+
+    public void Stop()
+    {
+        for (int i = 0; i < School.Count; ++i)
+        {
+            School[i].Speed = 0;
+        }
+    }
+
+    public void ChangeSpeed(float pSpeedDelta)
+    {
+        for (int i = 0; i < School.Count; ++i)
+        {
+            School[i].Speed += pSpeedDelta;
+        }
+    }
+
+    public void MoveDirection(float pRotation)
+    {
+        mCurrentCommandIndex = 0;
+        Commands = new List<float>();
+        Commands.Add(pRotation);
+        for (int i = 0; i < NumberOfFishes; ++i)
+        {
+            mAlreadyFollowedCommand[i] = false;
+        }
+    }
+
+    public void Loop360()
+    {
+        mCurrentCommandIndex = 0;
+        Commands = new List<float>();
+        Commands.Add(0);
+        Commands.Add(45);
+        Commands.Add(90);
+        Commands.Add(135);
+        Commands.Add(180);
+        Commands.Add(225);
+        Commands.Add(270);
+        Commands.Add(315);
+        Commands.Add(359);
+
+        for (int i = 0; i < NumberOfFishes; ++i)
+        {
+            mAlreadyFollowedCommand[i] = false;
+        }
+    }
+
+
 }
